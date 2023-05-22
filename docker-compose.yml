@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+    httpd:
+        build: .docker/httpd
+        ports:
+            - "80:80"
+        volumes:
+            - ./.docker/httpd/httpd.conf:/usr/local/apache2/conf/httpd.conf
+            - ./src:/usr/local/apache2/htdocs
+        depends_on:
+            - php
+    php:
+        build: ./.docker/php
+        volumes:
+            - ./src:/usr/local/apache2/htdocs
+            - ./.docker/php/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+        environment:
+            TZ: Asia/Tokyo
+    mariadb:
+        build: ./.docker/mariadb
+        volumes:
+            - ./.docker/mariadb/.data:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        restart: always
+        environment:
+            MYSQL_DATABASE: yawaraka
+            MYSQL_USER: yawaraka
+            MYSQL_PASSWORD: yawaraka
+            MYSQL_ROOT_PASSWORD: yawaraka
+            TZ: Asia/Tokyo
+    ngrok:
+        image: ngrok/ngrok:latest
+        restart: unless-stopped
+        command:
+            - "start"
+            - "--none"
+        volumes:
+            - ./.docker/ngrok/ngrok.yml:/etc/ngrok.yml
+        ports:
+            - "4040:4040"
