@@ -3,11 +3,11 @@ version: "3.9"
 services:
     httpd:
         build: .docker/httpd
-        ports:
-            - "80:80"
         volumes:
             - ./.docker/httpd/httpd.conf:/usr/local/apache2/conf/httpd.conf
             - ./src:/usr/local/apache2/htdocs
+        ports:
+            - "80:80"
         depends_on:
             - php
     php:

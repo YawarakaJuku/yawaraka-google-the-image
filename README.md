@@ -43,3 +43,21 @@
   ```
   + `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` は、ngrok のアカウントページから取得したトークンを入力してください。
     * [ngrok アカウントページ](https://dashboard.ngrok.com/get-started/your-authtoken)
+
+
+## 開発の手順
+### 開発開始時に行う手順
+- 以下のコマンドを実行
+  ```shell
+  $ docker compose up -d
+  $ docker compose exec ngrok ngrok http httpd:80 --config /etc/ngrok.yml
+  ```
+
+### 開発終了時に行う手順
+- 以下のコマンドを実行
+  ```shell
+  $ docker compose down
+  ```
+
+
+
