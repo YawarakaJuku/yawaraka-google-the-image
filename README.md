@@ -22,27 +22,35 @@
 
 
 ## 環境構築
-### 1. リポジトリをクローン
-- 任意のディレクトリで以下のコマンドを実行
-  ```shell
-  $ git clone git@github.com:YawarakaJuku/yawaraka-google-the-image.git
-  ```
-
-### 2. Dockerイメージをビルドして起動
+### 1. Dockerイメージをビルドして起動
 - 以下のコマンドを実行
   ```shell
-  $ cd yawaraka-google-the-image
   $ docker compose up -d --build
   ```
 
-### ngrok を起動
+### 2. 設定ファイルを作成
 - 以下のコマンドを実行
   ```shell
-  $ docker compose exec ngrok ngrok authtoken xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --config /etc/ngrok.yml
-  $ docker compose exec ngrok ngrok http httpd:80 --config /etc/ngrok.yml
+  $ docker compose exec ngrok cp .env.example .env
   ```
+
+### 3. ngrok のアクセストークンを .env ファイルに設定
+- NGROK_AUTHTOKEN にアクセストークンを設定する
   + `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` は、ngrok のアカウントページから取得したトークンを入力してください。
     * [ngrok アカウントページ](https://dashboard.ngrok.com/get-started/your-authtoken)
+
+### 4. LINE Messaging API のチャネルアクセストークンを .env に設定
+- CHANNEL_ACCESS_TOKEN にアクセストークンを設定する
+  + `xxxx .... xxxx` は、LINE Developers から取得できます。
+    * [LINE Developers](https://developers.line.biz/console/)
+
+### 5. 公開ページへのアクセスを確認
+- [http://localhost:4040](http://localhost:4040)
+  + 上記にアクセスして公開ページを確認
+    * https://xxxx-000-000-000-000.ngrok-free.app のようなアドレスになる
+
+### 6. LINE Developers ページの Webhook を設定して疎通確認を行う
+- 省略
 
 
 ## 開発の手順
@@ -50,7 +58,7 @@
 - 以下のコマンドを実行
   ```shell
   $ docker compose up -d
-  $ docker compose exec ngrok ngrok http httpd:80 --config /etc/ngrok.yml
+  $ docker compose exec php php .htngrok
   ```
 
 ### 開発終了時に行う手順
@@ -58,6 +66,5 @@
   ```shell
   $ docker compose down
   ```
-
 
 

@@ -17,6 +17,7 @@ services:
             - ./.docker/php/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
         environment:
             TZ: Asia/Tokyo
+            CHANNEL_ACCESS_TOKEN: "${CHANNEL_ACCESS_TOKEN}"
     mariadb:
         build: ./.docker/mariadb
         volumes:
@@ -35,8 +36,12 @@ services:
         restart: unless-stopped
         command:
             - "start"
-            - "--none"
+            - "--all"
+            - "--config"
+            - "/etc/ngrok.yml"
         volumes:
             - ./.docker/ngrok/ngrok.yml:/etc/ngrok.yml
         ports:
             - "4040:4040"
+        environment:
+            - NGROK_AUTHTOKEN="${NGROK_AUTHTOKEN}"

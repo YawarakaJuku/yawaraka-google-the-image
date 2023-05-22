@@ -1,3 +1,5 @@
 <?php
+phpinfo();
 
-echo file_get_contents("http://ngrok:4041/api/tunnels");
+// $json = file_get_contents("php://input");
+// echo $json;
