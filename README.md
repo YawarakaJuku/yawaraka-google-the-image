@@ -60,6 +60,7 @@
   $ docker compose up -d
   $ docker compose exec php php .htngrok
   ```
+  + ngrok が毎回生成するランダムなURLを LINE Messaging API の Webhook URL に自動設定する
 
 ### 開発終了時に行う手順
 - 以下のコマンドを実行

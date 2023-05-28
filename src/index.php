@@ -9,9 +9,11 @@ if (count($data["events"]) === 0) {
     exit(); // 何も入ってなければとりあえずそこで試合終了
 }
 
+$access_token = getenv("CHANNEL_ACCESS_TOKEN");
+
 // Event は複数飛んでくることがあるようなのでループで処理
 // https://developers.line.biz/ja/reference/messaging-api/#webhook-event-objects
-foreach ($json["events"] as $event) {
+foreach ($data["events"] as $event) {
 
     // LINE が固有で持っている userId
     // 友だち追加などで使用する LINE ID とは別物
@@ -70,7 +72,7 @@ foreach ($json["events"] as $event) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data)); // POST するデータをセット
             curl_setopt($curl, CURLOPT_HTTPHEADER, [
                 "Content-Type: application/json; charset=UTF-8", // POST する内容は JSON であることを指定
-                "Authorization: Bearer $this->access_token", // LINE Messaging API のアクセストークン
+                "Authorization: Bearer $access_token", // LINE Messaging API のアクセストークン
             ]);
             $result = curl_exec($curl); // HTTP リクエストの実行と結果の取得
             curl_close($curl); // 終了処理
@@ -90,7 +92,7 @@ foreach ($json["events"] as $event) {
             // コンテンツIDから画像を取得する
             // file_get_contents で取得する場合は、HTTPヘッダーにアクセストークンを付与する必要がある
             $header = [
-                "Authorization: Bearer $this->access_token",
+                "Authorization: Bearer $access_token",
             ];
             // HTTPヘッダーを指定して file_get_contents を実行する
             $context = [
@@ -122,25 +124,18 @@ foreach ($json["events"] as $event) {
             $domain = $_SERVER["HTTP_HOST"]; // ngrok で作成したドメインや、レンタルサーバーのドメインなどを指定する
             $image_url = "https://$domain/$filename"; // LINE Messaging API は https しか扱えないので http は考えない
 
-            // Google Lens を使用する場合
-            $url_01 = "https://lens.google.com/uploadbyurl?url=$image_url&hl=ja";
-            // 従来の Google 画像検索を使用する場合
-            $url_02 = "https://www.google.com/searchbyimage?sbisrc=4chanx&image_url=$image_url&safe=off";
+            // Google 画像検索を使用する
+            $url_01 = "https://www.google.com/searchbyimage?sbisrc=4chanx&image_url=$image_url&safe=off";
 
             // リプライするメッセージを作成する
             $message_01 = [
                 "type" => "text",
                 "text" => $url_01, // 生成した URL を文字列として返す
             ];
-            $message_02 = [
-                "type" => "text",
-                "text" => $url_02, // 生成した URL を文字列として返す
-            ];
 
             // メッセージオブジェクトを作成する
             $messages = [
                 $message_01,
-                $message_02,
             ];
 
             // 作成したメッセージをリプライするためのリクエストボディを作成する
@@ -158,7 +153,7 @@ foreach ($json["events"] as $event) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data)); // POST するデータをセット
             curl_setopt($curl, CURLOPT_HTTPHEADER, [
                 "Content-Type: application/json; charset=UTF-8", // POST する内容は JSON であることを指定
-                "Authorization: Bearer $this->access_token", // LINE Messaging API のアクセストークン
+                "Authorization: Bearer $access_token", // LINE Messaging API のアクセストークン
             ]);
             $result = curl_exec($curl); // HTTP リクエストの実行と結果の取得
             curl_close($curl); // 終了処理
