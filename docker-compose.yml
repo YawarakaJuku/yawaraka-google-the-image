@@ -18,19 +18,19 @@ services:
         environment:
             TZ: Asia/Tokyo
             CHANNEL_ACCESS_TOKEN: "${CHANNEL_ACCESS_TOKEN}"
-    mariadb:
-        build: ./.docker/mariadb
-        volumes:
-            - ./.docker/mariadb/.data:/var/lib/mysql
-        ports:
-            - "3306:3306"
-        restart: always
-        environment:
-            MYSQL_DATABASE: yawaraka
-            MYSQL_USER: yawaraka
-            MYSQL_PASSWORD: yawaraka
-            MYSQL_ROOT_PASSWORD: yawaraka
-            TZ: Asia/Tokyo
+#    mariadb:
+#        build: ./.docker/mariadb
+#        volumes:
+#            - ./.docker/mariadb/.data:/var/lib/mysql
+#        ports:
+#            - "3306:3306"
+#        restart: always
+#        environment:
+#            MYSQL_DATABASE: yawaraka
+#            MYSQL_USER: yawaraka
+#            MYSQL_PASSWORD: yawaraka
+#            MYSQL_ROOT_PASSWORD: yawaraka
+#            TZ: Asia/Tokyo
     ngrok:
         image: ngrok/ngrok:latest
         restart: unless-stopped
