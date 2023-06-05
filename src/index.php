@@ -45,7 +45,7 @@ foreach ($data["events"] as $event) {
             // https://developers.line.biz/ja/reference/messaging-api/#text-message
             $message_01 = [
                 "type" => "text",
-                "text" => $text, // オウム返しする
+                "text" => $url, // 作成した画像検索用URLを LINE Messaging API へ送る
             ];
 
             // メッセージの配列（1個～5個まで）を作成する
