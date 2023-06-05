@@ -52,13 +52,20 @@
 ### 6. LINE Developers ページの Webhook を設定して疎通確認を行う
 - 省略
 
+### 7. Docker コンテナを停止
+- 以下のコマンドを実行
+  ```shell
+  $ docker compose down
+  ```
+    + 以降は、開発開始時に行う手順を実行してください。
+
 
 ## 開発の手順
 ### 開発開始時に行う手順
 - 以下のコマンドを実行
   ```shell
   $ docker compose up -d
-  $ docker compose exec php php .htngrok
+  $ docker compose exec php php .htngrok.php
   ```
   + ngrok が毎回生成するランダムなURLを LINE Messaging API の Webhook URL に自動設定する
 
