@@ -18,4 +18,4 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, [
 curl_exec($curl);
 curl_close($curl);
 
-echo $public_url . "\n";
+echo "$public_url\n";
